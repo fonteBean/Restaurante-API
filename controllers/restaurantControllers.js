@@ -13,6 +13,18 @@ async function read(req,res) {
     }
 }
 
+async function readAll(res,res){
+  try {
+    const plates = await restaurantRepository.readAll();
+    if(!plates){
+      return errorResponse(res,404,"Not  Found");
+    }
+    return res.status(200).json(plates);
+  } catch (error) {
+    return errorResponse(res,500,error);
+  }
+}
+
 
 async function create(req,res) {
   try {
