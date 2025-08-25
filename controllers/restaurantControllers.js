@@ -1,8 +1,9 @@
 const restaurantRepository = require("../repositories/restaurantRepository")
 const errorResponse = require('../utils/errorHandler')
+
 async function read(req,res) {
     try{
-      const id = req.param.id;
+      const id = req.params.id;
       const plate = await restaurantRepository.read(id);
       if(!plate){
         return errorResponse(res,404,`Not Found`);
@@ -26,27 +27,26 @@ async function readAll(res,res){
 }
 
 
-async function create(req,res) {
+async function create(req, res) {
   try {
-    const {nome,descricao,preco,ingredientes} = req.body;
-    if(!nome || !descricao || !preco || !ingredientes){
-        return errorResponse(res,400,"Parâmetros incompletos");
-    }
-    const plate = {
-      nome : nome,
-      descricao : descricao,
-      preco : preco,
-      ingredientes : ingredientes
-    }
-    const query =  await restaurantRepository.create(plate);
-    if(!query){
-      return errorResponse(res,400,"Error ao criar prato");
-    }
-    return res.status(201).json(plate);
-  } catch (error) {
-   return errorResponse(res,500,error);
-  }  
+    const { nome, descricao, preco, ingredientes } = req.body;
 
+    if (!nome || !descricao || preco == null || !ingredientes) {
+      return errorResponse(res, 400, "Parâmetros incompletos");
+    }
+
+    const plate = { nome, descricao, preco, ingredientes };
+
+    const query = await restaurantRepository.create(plate);
+
+    if (!query || query.length === 0) {
+      return errorResponse(res, 400, "Erro ao criar prato");
+    }
+
+    return res.status(201).json(query[0]);
+  } catch (error) {
+    return errorResponse(res, 500, error.message || error);
+  }
 }
 
 
