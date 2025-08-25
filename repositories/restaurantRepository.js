@@ -2,11 +2,11 @@ const db = require('../db/db');
 
 async function create(plate) {
   try{
-    const query = await db('pratos').insert(plate);
+    const query = await db('pratos').insert(plate).returning("*");
     if(!query){
       return false;
     }
-    return true;
+    return query;
 }catch(err){
     console.log(err);
     return false;
@@ -42,7 +42,7 @@ async function readAll(){
 
 async function del(id){
   try{
-    const query = await db('pratos').where({id:id});
+    const query = await db('pratos').where({id:id}).del();
     if(!query){
       return false;
     }

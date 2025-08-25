@@ -52,7 +52,7 @@ async function create(req, res) {
 
 async function del(req,res) {
   try{
-    const id = req.id;
+    const id = req.params.id;
     if(!id){
       return errorResponse(res,404,"Id não encontrado");
     }
@@ -60,7 +60,7 @@ async function del(req,res) {
     if(!query){
       return errorResponse(res,400,"Erro ao deletar item");
     }
-    return res.status(204);
+    return res.status(204).send('');
   }catch(error){
     return errorResponse(res,500,error);
   }
