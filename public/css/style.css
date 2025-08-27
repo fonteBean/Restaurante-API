@@ -68,6 +68,15 @@ header{
     gap: 2rem;
 }
 
+#lista-pratos {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  text-align: center;
+  justify-content: center;
+  margin-top: 20px;
+}
+
 footer{
     padding: 20px;
     text-align: center;
